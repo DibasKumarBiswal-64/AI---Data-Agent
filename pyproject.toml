@@ -1,0 +1,25 @@
+[project]
+name = "data-agent-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "dibas_64", email = "dibasbiswal4444@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "dotenv>=0.9.9",
+    "ipython>=9.17.1",
+    "langchain>=1.4.6",
+    "langchain-openai>=1.7.2",
+    "langgraph>=1.2.16",
+    "psycopg2-binary>=2.9.13",
+    "pydantic>=2.14.1",
+]
+
+[project.scripts]
+data-agent-project = "data_agent_project:main"
+
+[build-system]
+requires = ["uv_build>=0.13.1,<0.14.0"]
+build-backend = "uv_build"

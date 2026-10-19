@@ -1,0 +1,22 @@
+
+# Package and project management
+uv
+
+# LangChain and LLM integration
+langchain
+langchain-core
+langchain-openai
+
+# Agent workflow orchestration
+langgraph
+
+# Data validation
+pydantic
+
+# PostgreSQL database connectivity
+psycopg2-binary
+
+# Environment variable management
+python-dotenv
+
+
