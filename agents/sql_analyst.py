@@ -16,6 +16,12 @@ def curate_ques(state:AgentSchema) -> AgentSchema:
 
     response=llm.invoke(f"Curate the following question: {user_question}").content
 
+    if isinstance(response, list):
+        response = "".join(
+            item["text"] for item in response
+            if isinstance(item, dict) and "text" in item
+        )
+
     state.curated_ques = response
 
     state.message = state.message + [HumanMessage(content=f"{response}")] # Append the curated question to the message list
@@ -67,6 +73,14 @@ def generate_sql_query(state: AgentSchema) -> AgentSchema:
 
     llm = pick_llm("medium") # pick the appropiate LLM based on the level of question
     generated_sql_query = llm.invoke(prompt).content # Generate the SQL query using the prompt
+
+    if isinstance(generated_sql_query, list):
+        generated_sql_query = "".join(
+            item["text"] if isinstance(item, dict) and "text" in item
+            else item if isinstance(item, str)
+            else ""
+            for item in generated_sql_query
+        )
     state.generated_sql_query = generated_sql_query.strip() # Remove any leading or trailing whitespace from the generated SQL query
 
     return state
@@ -210,10 +224,11 @@ sql_agent_graph.add_edge("cancle_sql", END)
 sql_agent_graph.add_edge("execute_sql", "represent_final_answer")
 sql_agent_graph.add_edge("represent_final_answer", END)
 
+ # Compile the graph 
+sql_analyst_agent = sql_agent_graph.compile()
 
 if __name__ == "__main__":
-    # Compile the graph 
-    sql_analyst_agent = sql_agent_graph.compile()
+   
 
 
     from IPython.display import Image, display

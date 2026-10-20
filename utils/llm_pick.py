@@ -14,11 +14,11 @@ def pick_llm(level: str):
         ChatOpenAI: The LLM instance to be used.
     """
     if level.lower() == "low":
-        llm = ChatOpenAI(model_name="gpt-5.6-luna",temperature=0)
+        llm = ChatOpenAI(model_name="gpt-5.6-luna",temperature=0,reasoning={"effort": "none"} )
     elif level.lower() == "medium":
-        llm = ChatOpenAI(model_name="gpt-6.1-sol")
+        llm = ChatOpenAI(model_name="gpt-6.1-sol",model_kwargs={"reasoning": {"effort": "low"}})
     elif level.lower() == "high":
-        llm = ChatOpenAI(model_name="gpt-6-astra", temperature=0)
+        llm = ChatOpenAI(model_name="gpt-6-astra",reasoning={"effort": "low"})
     else:
         raise ValueError (f"Unsupported level: {level}")
     return llm
